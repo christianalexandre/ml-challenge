@@ -18,6 +18,8 @@
 		3F3E83482C25F71B003B0A81 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3E83472C25F71B003B0A81 /* Extensions.swift */; };
 		3F3E834B2C25F755003B0A81 /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3E834A2C25F755003B0A81 /* DashboardVC.swift */; };
 		3F3E834D2C25F75E003B0A81 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3E834C2C25F75E003B0A81 /* Dashboard.storyboard */; };
+		3F3E83522C25FFF2003B0A81 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3E83512C25FFF2003B0A81 /* RxSwift */; };
+		3F3E83552C260025003B0A81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3E83542C260025003B0A81 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F3E83522C25FFF2003B0A81 /* RxSwift in Frameworks */,
+				3F3E83552C260025003B0A81 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,7 +145,8 @@
 		3F3E83402C25F5AB003B0A81 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3F3E83472C25F71B003B0A81 /* Extensions.swift */,
+				3F3E834E2C25FBF2003B0A81 /* Extensions */,
+				3F3E834F2C25FF27003B0A81 /* Repositories */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -189,6 +194,21 @@
 			path = Dashboard;
 			sourceTree = "<group>";
 		};
+		3F3E834E2C25FBF2003B0A81 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3F3E83472C25F71B003B0A81 /* Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3F3E834F2C25FF27003B0A81 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -205,6 +225,10 @@
 			dependencies = (
 			);
 			name = "ml-challenge";
+			packageProductDependencies = (
+				3F3E83512C25FFF2003B0A81 /* RxSwift */,
+				3F3E83542C260025003B0A81 /* Alamofire */,
+			);
 			productName = "ml-challenge";
 			productReference = 3F3E830C2C25F58B003B0A81 /* ml-challenge.app */;
 			productType = "com.apple.product-type.application";
@@ -277,6 +301,10 @@
 				Base,
 			);
 			mainGroup = 3F3E83032C25F58B003B0A81;
+			packageReferences = (
+				3F3E83502C25FFF2003B0A81 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				3F3E83532C260025003B0A81 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 3F3E830D2C25F58B003B0A81 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -657,6 +685,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3F3E83502C25FFF2003B0A81 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
+		3F3E83532C260025003B0A81 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3F3E83512C25FFF2003B0A81 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F3E83502C25FFF2003B0A81 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		3F3E83542C260025003B0A81 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F3E83532C260025003B0A81 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3F3E83042C25F58B003B0A81 /* Project object */;
 }
