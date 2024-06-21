@@ -30,7 +30,7 @@ private extension BaseRepository {
     }
 }
 
-
+// - MARK: Public request methods
 extension BaseRepository {
     func createObservableRequest<T: Decodable>(method: HTTPMethod, url: String, parameters: Parameters? = nil) -> Observable<T> {
         return createBaseRequest(method: method, url: url, parameters: parameters)
