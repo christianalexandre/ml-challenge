@@ -18,8 +18,10 @@
 		3F3E83482C25F71B003B0A81 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3E83472C25F71B003B0A81 /* Extensions.swift */; };
 		3F3E834B2C25F755003B0A81 /* DashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3E834A2C25F755003B0A81 /* DashboardVC.swift */; };
 		3F3E834D2C25F75E003B0A81 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3E834C2C25F75E003B0A81 /* Dashboard.storyboard */; };
-		3F3E83522C25FFF2003B0A81 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3E83512C25FFF2003B0A81 /* RxSwift */; };
-		3F3E83552C260025003B0A81 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3F3E83542C260025003B0A81 /* Alamofire */; };
+		3FFF7D2C2C260525007D14D7 /* RxAlamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3FFF7D2B2C260525007D14D7 /* RxAlamofire */; };
+		3FFF7D2F2C26058E007D14D7 /* BaseRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF7D2E2C26058E007D14D7 /* BaseRepository.swift */; };
+		3FFF7D312C26084D007D14D7 /* DataRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF7D302C26084D007D14D7 /* DataRequestExtension.swift */; };
+		3FFF7D332C260ACD007D14D7 /* NSErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF7D322C260ACD007D14D7 /* NSErrorExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,9 @@
 		3F3E83472C25F71B003B0A81 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3F3E834A2C25F755003B0A81 /* DashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardVC.swift; sourceTree = "<group>"; };
 		3F3E834C2C25F75E003B0A81 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
+		3FFF7D2E2C26058E007D14D7 /* BaseRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRepository.swift; sourceTree = "<group>"; };
+		3FFF7D302C26084D007D14D7 /* DataRequestExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRequestExtension.swift; sourceTree = "<group>"; };
+		3FFF7D322C260ACD007D14D7 /* NSErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSErrorExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F3E83522C25FFF2003B0A81 /* RxSwift in Frameworks */,
-				3F3E83552C260025003B0A81 /* Alamofire in Frameworks */,
+				3FFF7D2C2C260525007D14D7 /* RxAlamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,8 +149,8 @@
 		3F3E83402C25F5AB003B0A81 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3FFF7D2D2C26053A007D14D7 /* Repositories */,
 				3F3E834E2C25FBF2003B0A81 /* Extensions */,
-				3F3E834F2C25FF27003B0A81 /* Repositories */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -198,13 +202,16 @@
 			isa = PBXGroup;
 			children = (
 				3F3E83472C25F71B003B0A81 /* Extensions.swift */,
+				3FFF7D302C26084D007D14D7 /* DataRequestExtension.swift */,
+				3FFF7D322C260ACD007D14D7 /* NSErrorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		3F3E834F2C25FF27003B0A81 /* Repositories */ = {
+		3FFF7D2D2C26053A007D14D7 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				3FFF7D2E2C26058E007D14D7 /* BaseRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -226,8 +233,7 @@
 			);
 			name = "ml-challenge";
 			packageProductDependencies = (
-				3F3E83512C25FFF2003B0A81 /* RxSwift */,
-				3F3E83542C260025003B0A81 /* Alamofire */,
+				3FFF7D2B2C260525007D14D7 /* RxAlamofire */,
 			);
 			productName = "ml-challenge";
 			productReference = 3F3E830C2C25F58B003B0A81 /* ml-challenge.app */;
@@ -302,8 +308,7 @@
 			);
 			mainGroup = 3F3E83032C25F58B003B0A81;
 			packageReferences = (
-				3F3E83502C25FFF2003B0A81 /* XCRemoteSwiftPackageReference "RxSwift" */,
-				3F3E83532C260025003B0A81 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				3FFF7D2A2C260525007D14D7 /* XCRemoteSwiftPackageReference "RxAlamofire" */,
 			);
 			productRefGroup = 3F3E830D2C25F58B003B0A81 /* Products */;
 			projectDirPath = "";
@@ -348,8 +353,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FFF7D2F2C26058E007D14D7 /* BaseRepository.swift in Sources */,
+				3FFF7D332C260ACD007D14D7 /* NSErrorExtension.swift in Sources */,
 				3F3E83482C25F71B003B0A81 /* Extensions.swift in Sources */,
 				3F3E834B2C25F755003B0A81 /* DashboardVC.swift in Sources */,
+				3FFF7D312C26084D007D14D7 /* DataRequestExtension.swift in Sources */,
 				3F3E83462C25F6E0003B0A81 /* BaseViewController.swift in Sources */,
 				3F3E83102C25F58B003B0A81 /* AppDelegate.swift in Sources */,
 				3F3E83122C25F58B003B0A81 /* SceneDelegate.swift in Sources */,
@@ -687,34 +695,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3F3E83502C25FFF2003B0A81 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+		3FFF7D2A2C260525007D14D7 /* XCRemoteSwiftPackageReference "RxAlamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxAlamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.7.1;
-			};
-		};
-		3F3E83532C260025003B0A81 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.9.1;
+				minimumVersion = 5.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3F3E83512C25FFF2003B0A81 /* RxSwift */ = {
+		3FFF7D2B2C260525007D14D7 /* RxAlamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3F3E83502C25FFF2003B0A81 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		3F3E83542C260025003B0A81 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3F3E83532C260025003B0A81 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
+			package = 3FFF7D2A2C260525007D14D7 /* XCRemoteSwiftPackageReference "RxAlamofire" */;
+			productName = RxAlamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
