@@ -8,7 +8,7 @@
 import Foundation
 
 struct Endpoints {
-    static func searchItem(_ item: String) -> String {
-        return "\(ApiConstants.apiURL)/sites/MLB/search?q=\(item)"
+    static func searchItem(_ item: String, _ offset: Int) -> String {
+        return "\(ApiConstants.apiURL)/sites/MLB/search?q=\(item)&offset=\(offset)"
     }
 }

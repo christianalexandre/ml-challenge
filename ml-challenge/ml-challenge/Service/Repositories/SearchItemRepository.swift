@@ -9,8 +9,8 @@ import Foundation
 import RxSwift
 
 class SearchItemRepository {
-    func searchItem(_ item: String) -> Single<SearchItemResponse> {
-        let endpoint = Endpoints.searchItem(item)
+    func searchItem(_ item: String, _ offset: Int) -> Single<SearchItemResponse> {
+        let endpoint = Endpoints.searchItem(item, offset)
         return BaseRepository.shared.createSingleRequest(
             method: .get,
             url: endpoint

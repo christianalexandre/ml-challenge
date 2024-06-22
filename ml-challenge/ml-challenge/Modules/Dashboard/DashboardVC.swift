@@ -13,13 +13,23 @@ class DashboardVC: BaseVC {
     @IBOutlet weak var searchItemTextField: UITextField!
     @IBOutlet weak var itemsTableView: UITableView!
     
-    
     private let disposeBag = DisposeBag()
     private var items: [SearchItem] = []
+    private var lastSearch = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 }
 
@@ -32,7 +42,7 @@ private extension DashboardVC {
     
     func setupTextField() {
         searchItemTextField.delegate = self
-        searchItemTextField.placeholder = "Buscar seu produto"
+        searchItemTextField.placeholder = String(localized: "SEARCH_PRODUCTS")
     }
     
     func setupTableView() {
@@ -42,14 +52,18 @@ private extension DashboardVC {
     }
 }
 
+// - MARK: Private Methods
 private extension DashboardVC {
-    func getItems(with itemName: String) {
-        SearchItemRepository().searchItem(itemName)
+    func getItems(with itemName: String?, offset: Int = 0) {
+        showLoading(message: String(localized: "SEARCHING_PRODUCTS"))
+        let itemToSearch = itemName ?? lastSearch
+        SearchItemRepository().searchItem(itemToSearch, offset)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .observeOn(ConcurrentMainScheduler.instance)
+            .do(onDispose: { self.hideLoading() })
             .subscribe(onSuccess: { items in
-                print("success")
-                self.items = items.results
+                self.items = (offset != 0) ? self.items + items.results : items.results
+                self.lastSearch = itemToSearch
                 self.itemsTableView.reloadData()
             }, onError: {_ in
                 print("onError")
@@ -60,8 +74,7 @@ private extension DashboardVC {
 // - MARK: Delegate Methods
 extension DashboardVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("textFieldShouldReturn")
-        getItems(with: textField.text ?? "")
+        getItems(with: textField.text)
         return true
     }
 }
@@ -73,14 +86,21 @@ extension DashboardVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueCell(withType: SearchItemCell.self,for: indexPath) as? SearchItemCell else { return UITableViewCell() }
-        let item = items[indexPath.row]
-        cell.bind(with:
-            SearchItemCellModel(
-                imageURL: item.thumbnail,
-                title: item.title,
-                price: String(item.price)
-            )
-        )
+        cell.bind(with: items[indexPath.row])
+        cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = ItemDetailVC()
+        vc.initView(items[indexPath.row])
+        pushViewController(with: vc)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastIndex = indexPath.row + 1
+        if lastIndex == items.count {
+            getItems(with: lastSearch, offset: lastIndex)
+        }
     }
 }

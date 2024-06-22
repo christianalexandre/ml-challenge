@@ -1,0 +1,21 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "DIALOG_ERROR" : {
+
+    },
+    "DIALOG_OK" : {
+
+    },
+    "LOADING_DEFAULT" : {
+
+    },
+    "SEARCH_PRODUCTS" : {
+
+    },
+    "SEARCHING_PRODUCTS" : {
+
+    }
+  },
+  "version" : "1.0"
+}

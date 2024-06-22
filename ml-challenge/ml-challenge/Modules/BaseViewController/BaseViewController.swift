@@ -20,15 +20,19 @@ class BaseVC: UIViewController {
         self.navigationController?.popViewController(animated: animated)
     }
 
-    func showLoading() {
-        let alertController = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.style = UIActivityIndicatorView.Style.medium
+    func showLoading(message: String = String(localized: "LOADING_DEFAULT")) {
+        let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let loadingIndicator = UIActivityIndicatorView(style: .medium)
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.startAnimating()
         alertController.view.addSubview(loadingIndicator)
+        let constraints = [
+            loadingIndicator.centerYAnchor.constraint(equalTo: alertController.view.centerYAnchor),
+            loadingIndicator.rightAnchor.constraint(equalTo: alertController.view.rightAnchor, constant: -10)
+        ]
+        NSLayoutConstraint.activate(constraints)
         loadingView = alertController
-        present(loadingView, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
     
     func hideLoading(animating animated: Bool = true) {
