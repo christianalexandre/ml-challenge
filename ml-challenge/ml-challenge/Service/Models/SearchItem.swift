@@ -13,12 +13,14 @@ struct SearchItem: Decodable {
         case siteId = "site_id"
         case title
         case price
+        case thumbnail
     }
     
     let id: String
     let siteId: String
     let title: String
     let price: Double
+    let thumbnail: String
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -27,6 +29,7 @@ struct SearchItem: Decodable {
         siteId = try container.decode(String.self, forKey: .siteId)
         title = try container.decode(String.self, forKey: .title)
         price = try container.decode(Double.self, forKey: .price)
+        thumbnail = try container.decode(String.self, forKey: .thumbnail)
     }
 }
 

@@ -9,28 +9,48 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="8Dd-MM-vOn" customClass="SearchItemCell" customModule="ml_challenge" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="96"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Dd-MM-vOn" id="Fvy-me-h1b">
-                <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="393" height="96"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1Y-Tm-9AP">
-                        <rect key="frame" x="16" y="0.0" width="377" height="44"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PmG-C5-96z">
+                        <rect key="frame" x="16" y="12" width="72" height="72"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="72" id="Yu2-bS-8XM"/>
+                            <constraint firstAttribute="width" constant="72" id="ltR-Uo-TbT"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" showsExpansionTextWhenTruncated="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7p-N2-LVI">
+                        <rect key="frame" x="104" y="16" width="273" height="43"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oyL-I6-1J5">
+                        <rect key="frame" x="104" y="59" width="273" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="K1Y-Tm-9AP" firstAttribute="top" secondItem="Fvy-me-h1b" secondAttribute="top" id="DD3-CH-Hfc"/>
-                    <constraint firstItem="K1Y-Tm-9AP" firstAttribute="leading" secondItem="Fvy-me-h1b" secondAttribute="leading" constant="16" id="e7q-rt-kgw"/>
-                    <constraint firstAttribute="trailing" secondItem="K1Y-Tm-9AP" secondAttribute="trailing" id="pLA-Wa-PL7"/>
-                    <constraint firstAttribute="bottom" secondItem="K1Y-Tm-9AP" secondAttribute="bottom" id="umD-oQ-pK7"/>
+                    <constraint firstItem="l7p-N2-LVI" firstAttribute="top" secondItem="Fvy-me-h1b" secondAttribute="top" constant="16" id="0Yw-Cw-YNY"/>
+                    <constraint firstAttribute="trailing" secondItem="l7p-N2-LVI" secondAttribute="trailing" constant="16" id="5Ma-xs-blU"/>
+                    <constraint firstItem="PmG-C5-96z" firstAttribute="leading" secondItem="Fvy-me-h1b" secondAttribute="leading" constant="16" id="AVl-1O-40d"/>
+                    <constraint firstItem="oyL-I6-1J5" firstAttribute="leading" secondItem="PmG-C5-96z" secondAttribute="trailing" constant="16" id="PsU-Nd-gBd"/>
+                    <constraint firstAttribute="trailing" secondItem="oyL-I6-1J5" secondAttribute="trailing" constant="16" id="Q5m-u0-JTd"/>
+                    <constraint firstItem="l7p-N2-LVI" firstAttribute="leading" secondItem="PmG-C5-96z" secondAttribute="trailing" constant="16" id="RJq-NO-9Mm"/>
+                    <constraint firstItem="PmG-C5-96z" firstAttribute="centerY" secondItem="Fvy-me-h1b" secondAttribute="centerY" id="bWf-QZ-zTD"/>
+                    <constraint firstItem="oyL-I6-1J5" firstAttribute="top" secondItem="l7p-N2-LVI" secondAttribute="bottom" id="mLs-4j-NmK"/>
+                    <constraint firstAttribute="bottom" secondItem="oyL-I6-1J5" secondAttribute="bottom" constant="16" id="stI-hA-w76"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="label" destination="K1Y-Tm-9AP" id="SOz-UX-6zp"/>
+                <outlet property="detailLabel" destination="oyL-I6-1J5" id="j3O-iv-YHd"/>
+                <outlet property="thumbnailImageView" destination="PmG-C5-96z" id="5be-p0-Px6"/>
+                <outlet property="titleLabel" destination="l7p-N2-LVI" id="H08-42-E8h"/>
             </connections>
             <point key="canvasLocation" x="203" y="-9"/>
         </tableViewCell>

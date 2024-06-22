@@ -73,7 +73,14 @@ extension DashboardVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueCell(withType: SearchItemCell.self,for: indexPath) as? SearchItemCell else { return UITableViewCell() }
-        cell.bind(teste: items[indexPath.row].title)
+        let item = items[indexPath.row]
+        cell.bind(with:
+            SearchItemCellModel(
+                imageURL: item.thumbnail,
+                title: item.title,
+                price: String(item.price)
+            )
+        )
         return cell
     }
 }
