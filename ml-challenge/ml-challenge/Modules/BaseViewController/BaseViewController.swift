@@ -39,7 +39,7 @@ class BaseVC: UIViewController {
         loadingView.dismiss(animated: animated)
     }
     
-    func showDialogError(withMessage message: String) {
+    func showDialogError(withMessage message: String, completion: (() -> Void)? = nil) {
         let alert = UIAlertController(
             title: String(localized: "DIALOG_ERROR"),
             message: message,
@@ -48,7 +48,7 @@ class BaseVC: UIViewController {
         alert.addAction(UIAlertAction(
             title: String(localized: "DIALOG_OK"),
             style: UIAlertAction.Style.default,
-            handler: nil)
+            handler: { _ in completion?() })
         )
         self.present(alert, animated: true, completion: nil)
     }

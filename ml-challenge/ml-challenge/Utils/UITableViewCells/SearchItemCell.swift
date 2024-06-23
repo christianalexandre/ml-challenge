@@ -39,18 +39,13 @@ class SearchItemCell: UITableViewCell {
 // - MARK: Private Methods
 private extension SearchItemCell {
     func downloadThumbnail(_ url: String) {
-        if let url = URL(string: url) {
-            RxAlamofire.requestData(.get, url)
-                .subscribe(onNext: { [weak self] ( _, data) in
-                    guard let self = self,
-                          let image = UIImage(data: data)
-                    else { return }
-                    changeThumbnailVisibility(isHidden: false)
-                    self.thumbnailImageView.image = image
-                }, onError: { error in
-                    print("Error downloading image: \(error)")
-                }).disposed(by: disposeBag)
-        }
+        SearchItemsManager.shared.downloadThumnail(from: url)
+            .subscribe(onSuccess: { [weak self] data in
+                self?.changeThumbnailVisibility(isHidden: false)
+                self?.thumbnailImageView.image = UIImage(data: data)
+            }, onError: { [weak self] error in
+                self?.superview?.showToast(message: error.localizedDescription)
+            }).disposed(by: disposeBag)
     }
     
     func changeThumbnailVisibility(isHidden: Bool) {

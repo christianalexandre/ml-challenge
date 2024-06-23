@@ -15,7 +15,6 @@ class DashboardVC: BaseVC {
     
     private let disposeBag = DisposeBag()
     private var items: [SearchItem] = []
-    private var lastSearch = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,30 +53,20 @@ private extension DashboardVC {
 
 // - MARK: Private Methods
 private extension DashboardVC {
-    func getItems(with itemName: String, offset: Int = 0) {
-        if offset > 1000 {
-            view.showToast(message: String(localized: "OFFSET_GREATER_THAN_1000_LIMIT"))
-            return
-        }
+    func getItems(with itemName: String? = nil, offset: Int = 0) {
         showLoading(message: String(localized: "SEARCHING_PRODUCTS"))
-        SearchItemRepository().searchItem(itemName, offset)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .observeOn(ConcurrentMainScheduler.instance)
+        SearchItemsManager.shared.getItemsByName(itemName, offset)
+            .do(onDispose: { self.hideLoading() })
             .subscribe(onSuccess: { items in
-                self.hideLoading()
-                self.items = (offset != 0) ? self.items + items.results : items.results
-                self.lastSearch = itemName
-                if items.results.isEmpty {
-                    self.view.showToast(message: String(localized: "END_OF_LIST"))
+                self.items = (offset != 0) ? self.items + items : items
+                self.itemsTableView.reloadData()
+            }, onError: { error in
+                if let error = error as? SearchError {
+                    self.view.showToast(message: error.localizedDescription)
                 } else {
-                    self.itemsTableView.reloadData()
-                    
-                    UserDefaultsHelper.shared.saveString(items.results.first?.categoryId ?? "", forKey: .lastSearchCategory)
-                }
-            }, onError: { _ in
-                self.hideLoading()
-                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-                    self.showDialogError(withMessage: String(localized: "GET_ITEMS_ERROR"))
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                        self.showDialogError(withMessage: String(localized: "GENERIC_ERROR"))
+                    }
                 }
             }).disposed(by: disposeBag)
     }
@@ -116,7 +105,7 @@ extension DashboardVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastIndex = indexPath.row + 1
         if lastIndex == items.count {
-            getItems(with: lastSearch, offset: lastIndex)
+            getItems(offset: lastIndex)
         }
     }
 }

@@ -49,19 +49,22 @@ private extension SellerItemsVC {
 private extension SellerItemsVC {
     func getItems() {
         guard let searchInfoPair else { return }
-        SearchItemRepository().searchBySellerId(String(searchInfoPair.sellerInfo.id), searchInfoPair.category)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .observeOn(ConcurrentMainScheduler.instance)
+        SearchItemsManager.shared.searchBySellerId(String(searchInfoPair.sellerInfo.id), searchInfoPair.category)
             .do(onDispose: { self.hideLoading() })
-            .subscribe(onSuccess: { items in
-                if items.results.isEmpty {
-
+            .subscribe(onSuccess: { [weak self] items in
+                self?.items = items
+                self?.tableView.reloadData()
+            }, onError: { [weak self] error in
+                if let error = error as? SearchError {
+                    self?.view.showToast(message: error.localizedDescription)
+                    self?.dismiss(animated: true)
                 } else {
-                    self.items = items.results
-                    self.tableView.reloadData()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                        self?.showDialogError(withMessage: String(localized: "GENERIC_ERROR")) {
+                            self?.dismiss(animated: true)
+                        }
+                    }
                 }
-            }, onError: { _ in
-                self.showDialogError(withMessage: String(localized: "GET_ITEMS_FROM_SELLER_ERROR"))
             }).disposed(by: disposeBag)
     }
 }

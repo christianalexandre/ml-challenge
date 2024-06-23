@@ -13,13 +13,10 @@
     "DIALOG_OK" : {
 
     },
-    "END_OF_LIST" : {
+    "GENERIC_ERROR" : {
 
     },
-    "GET_ITEMS_ERROR" : {
-
-    },
-    "GET_ITEMS_FROM_SELLER_ERROR" : {
+    "IMAGE_DOWNLOAD_ERROR" : {
 
     },
     "LOADING_DEFAULT" : {
@@ -40,7 +37,13 @@
     "RELOADING" : {
 
     },
+    "SEARCH_NO_RESULTS" : {
+
+    },
     "SEARCH_PRODUCTS" : {
+
+    },
+    "SEARCH_UNKNOWN_ERROR" : {
 
     },
     "SEARCHING_PRODUCTS" : {
