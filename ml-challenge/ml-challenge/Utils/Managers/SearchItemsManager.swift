@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxAlamofire
 
+/// A singleton class responsible for managing search items.
 class SearchItemsManager {
     private init() {}
     static let shared = SearchItemsManager()
@@ -19,6 +20,11 @@ class SearchItemsManager {
 }
 
 extension SearchItemsManager {
+    /// Fetch items by name and offset
+    /// - Parameters:
+    ///   - itemName: The item to search. If nil, the last searched name will be used
+    ///   - offset: The offset to pagination
+    /// - Returns: A Single emitting an array of "Search Item" or error
     func getItemsByName(_ itemName: String?, _ offset: Int) -> Single<[SearchItem]> {
         let itemToSearch = itemName ?? lastSearchByName
         return searchRepository.searchItem(itemToSearch, offset)
@@ -39,6 +45,11 @@ extension SearchItemsManager {
             }
     }
     
+    /// Fetch items by seller id
+    /// - Parameters:
+    ///   - sellerId: The ID of the seller
+    ///   - category: The category to filter
+    /// - Returns: A Single emitting an array of "Search Item" or error
     func searchBySellerId(_ sellerId: String, _ category: String) -> Single<[SearchItem]> {
         return searchRepository.searchBySellerId(sellerId, category)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -51,6 +62,9 @@ extension SearchItemsManager {
             }
     }
     
+    /// Download the data image from url
+    /// - Parameter urlString: The url string of the image
+    /// - Returns: A Single emitting the image data
     func downloadThumnail(from urlString: String?) -> Single<Data> {
         return Single.create { single in
             guard let urlString,
