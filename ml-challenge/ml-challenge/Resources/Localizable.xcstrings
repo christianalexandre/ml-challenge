@@ -13,16 +13,31 @@
     "DIALOG_OK" : {
 
     },
+    "END_OF_LIST" : {
+
+    },
     "GET_ITEMS_ERROR" : {
+
+    },
+    "GET_ITEMS_FROM_SELLER_ERROR" : {
 
     },
     "LOADING_DEFAULT" : {
 
     },
+    "LOADING_SELLER_ITEMS" : {
+
+    },
     "NOT_IMPLEMENTED_YET" : {
 
     },
+    "OFFSET_GREATER_THAN_1000_LIMIT" : {
+
+    },
     "PRODUCT_INFO" : {
+
+    },
+    "RELOADING" : {
 
     },
     "SEARCH_PRODUCTS" : {

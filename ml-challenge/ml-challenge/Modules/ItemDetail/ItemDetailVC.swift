@@ -45,8 +45,20 @@ private extension ItemDetailVC {
         }
         
         stackView.addArrangedSubview(createBuyView())
-        stackView.addArrangedSubview(createSellerView(with: item.seller.nickname))
+        stackView.addArrangedSubview(createSellerView(with: item.seller, category: item.categoryId))
         stackView.addArrangedSubview(createProductInfoView(item.attributes.toDictionary()))
+    }
+    
+    func reloadView() {
+        showLoading(message: String(localized: "RELOADING"))
+        for view in stackView.arrangedSubviews {
+            if view.tag != 0 {
+                stackView.removeArrangedSubview(view)
+                view.removeFromSuperview()
+            }
+        }
+        setupView()
+        hideLoading()
     }
 }
 
@@ -90,6 +102,8 @@ private extension ItemDetailVC {
         stackView.addArrangedSubview(addCartButton)
         stackView.addArrangedSubview(buyButton)
         
+        containerView.tag = 1
+        
         return containerView
     }
     
@@ -108,10 +122,12 @@ private extension ItemDetailVC {
         buttonContainer.addSubview(button)
         button.anchorToEntireView(of: buttonContainer, paddingTop: 8, paddingLeft: 16, paddingBottom: 0, paddingRight: 16)
         
+        buttonContainer.tag = 1
+        
         return buttonContainer
     }
     
-    func createSellerView(with sellerNickname: String) -> UIView {
+    func createSellerView(with sellerInfo: Seller, category: String) -> UIView {
         let containerView = UIView()
         let contentView = UIView()
         contentView.backgroundColor = .defaultGrey
@@ -123,14 +139,20 @@ private extension ItemDetailVC {
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         
         let sellerLabel = UILabel()
-        sellerLabel.text = sellerNickname
+        sellerLabel.text = sellerInfo.nickname
         sellerLabel.textAlignment = .center
         sellerLabel.font = UIFont.systemFont(ofSize: 16)
         
         let moreButton = UIButton(type: .system)
         moreButton.setTitle(String(localized: "SEE_MORE_FROM_SELLER"), for: .normal)
         moreButton.addAction(UIAction { _ in
-            self.view.showToast(message: String(localized: "NOT_IMPLEMENTED_YET"))
+            let vc = SellerItemsVC()
+            vc.initView(with: sellerInfo, category: category) { item in
+                self.item = item
+                self.reloadView()
+            }
+            vc.modalPresentationStyle = .formSheet
+            self.present(vc, animated: true, completion: nil)
         }, for: .touchUpInside)
         
         contentView.addSubview(titleLabel)
@@ -170,6 +192,8 @@ private extension ItemDetailVC {
         
         containerView.addSubview(contentView)
         contentView.fillSuperView(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
+        
+        containerView.tag = 1
         
         return containerView
     }
@@ -222,6 +246,8 @@ private extension ItemDetailVC {
 
         containerView.addSubview(contentView)
         contentView.fillSuperView(padding: .init(top: 8, left: 16, bottom: 8, right: 16))
+        
+        containerView.tag = 1
 
         return containerView
     }

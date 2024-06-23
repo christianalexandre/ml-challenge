@@ -16,7 +16,7 @@ struct SearchItemResponse: Decodable {
     }
     
     let siteId: String
-    let query: String
+    let query: String?
     let paging: PaginationSearchItemResponse
     let results: [SearchItem]
     
@@ -24,7 +24,7 @@ struct SearchItemResponse: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         siteId = try container.decode(String.self, forKey: .siteId)
-        query = try container.decode(String.self, forKey: .query)
+        query = try container.decodeIfPresent(String.self, forKey: .query)
         paging = try container.decode(PaginationSearchItemResponse.self, forKey: .paging)
         results = try container.decode([SearchItem].self, forKey: .results)
     }

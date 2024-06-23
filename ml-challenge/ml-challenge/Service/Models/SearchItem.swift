@@ -11,10 +11,10 @@ struct SearchItem: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case siteId = "site_id"
+        case categoryId = "category_id"
         case title
         case price
         case thumbnail
-        case condition
         case originalPrice = "original_price"
         case seller
         case attributes
@@ -22,11 +22,11 @@ struct SearchItem: Decodable {
     
     let id: String
     let siteId: String
+    let categoryId: String
     let title: String
     let price: Double
     let originalPrice: Double?
     let thumbnail: String
-    let condition: String
     let seller: Seller
     let attributes: [Attributes]
     
@@ -35,11 +35,11 @@ struct SearchItem: Decodable {
         
         id = try container.decode(String.self, forKey: .id)
         siteId = try container.decode(String.self, forKey: .siteId)
+        categoryId = try container.decode(String.self, forKey: .categoryId)
         title = try container.decode(String.self, forKey: .title)
         price = try container.decode(Double.self, forKey: .price)
         originalPrice = try container.decodeIfPresent(Double.self, forKey: .originalPrice)
         thumbnail = try container.decode(String.self, forKey: .thumbnail)
-        condition = try container.decode(String.self, forKey: .condition)
         seller = try container.decode(Seller.self, forKey: .seller)
         attributes = try container.decode([Attributes].self, forKey: .attributes)
     }

@@ -16,4 +16,12 @@ class SearchItemRepository {
             url: endpoint
         )
     }
+    
+    func searchBySellerId(_ sellerId: String, _ category: String) -> Single<SearchItemResponse> {
+        let endpoint = Endpoints.searchBySeller(sellerId, category)
+        return BaseRepository.shared.createSingleRequest(
+            method: .get,
+            url: endpoint
+        )
+    }
 }

@@ -55,17 +55,30 @@ private extension DashboardVC {
 // - MARK: Private Methods
 private extension DashboardVC {
     func getItems(with itemName: String, offset: Int = 0) {
+        if offset > 1000 {
+            view.showToast(message: String(localized: "OFFSET_GREATER_THAN_1000_LIMIT"))
+            return
+        }
         showLoading(message: String(localized: "SEARCHING_PRODUCTS"))
         SearchItemRepository().searchItem(itemName, offset)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .observeOn(ConcurrentMainScheduler.instance)
-            .do(onDispose: { self.hideLoading() })
             .subscribe(onSuccess: { items in
+                self.hideLoading()
                 self.items = (offset != 0) ? self.items + items.results : items.results
                 self.lastSearch = itemName
-                self.itemsTableView.reloadData()
+                if items.results.isEmpty {
+                    self.view.showToast(message: String(localized: "END_OF_LIST"))
+                } else {
+                    self.itemsTableView.reloadData()
+                    
+                    UserDefaultsHelper.shared.saveString(items.results.first?.categoryId ?? "", forKey: .lastSearchCategory)
+                }
             }, onError: { _ in
-                self.showDialogError(withMessage: String(localized: "GET_ITEMS_ERROR"))
+                self.hideLoading()
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+                    self.showDialogError(withMessage: String(localized: "GET_ITEMS_ERROR"))
+                }
             }).disposed(by: disposeBag)
     }
 }
