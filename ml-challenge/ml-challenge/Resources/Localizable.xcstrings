@@ -1,19 +1,43 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "ADD_TO_CART" : {
+
+    },
+    "BUY_NOW" : {
+
+    },
     "DIALOG_ERROR" : {
 
     },
     "DIALOG_OK" : {
 
     },
+    "GET_ITEMS_ERROR" : {
+
+    },
     "LOADING_DEFAULT" : {
+
+    },
+    "NOT_IMPLEMENTED_YET" : {
+
+    },
+    "PRODUCT_INFO" : {
 
     },
     "SEARCH_PRODUCTS" : {
 
     },
     "SEARCHING_PRODUCTS" : {
+
+    },
+    "SEE_MORE_FROM_SELLER" : {
+
+    },
+    "SELLER_INFO" : {
+
+    },
+    "TEXT_FIELD_EMPTY_ERROR" : {
 
     }
   },

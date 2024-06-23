@@ -54,19 +54,18 @@ private extension DashboardVC {
 
 // - MARK: Private Methods
 private extension DashboardVC {
-    func getItems(with itemName: String?, offset: Int = 0) {
+    func getItems(with itemName: String, offset: Int = 0) {
         showLoading(message: String(localized: "SEARCHING_PRODUCTS"))
-        let itemToSearch = itemName ?? lastSearch
-        SearchItemRepository().searchItem(itemToSearch, offset)
+        SearchItemRepository().searchItem(itemName, offset)
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .observeOn(ConcurrentMainScheduler.instance)
             .do(onDispose: { self.hideLoading() })
             .subscribe(onSuccess: { items in
                 self.items = (offset != 0) ? self.items + items.results : items.results
-                self.lastSearch = itemToSearch
+                self.lastSearch = itemName
                 self.itemsTableView.reloadData()
-            }, onError: {_ in
-                print("onError")
+            }, onError: { _ in
+                self.showDialogError(withMessage: String(localized: "GET_ITEMS_ERROR"))
             }).disposed(by: disposeBag)
     }
 }
@@ -74,7 +73,11 @@ private extension DashboardVC {
 // - MARK: Delegate Methods
 extension DashboardVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        getItems(with: textField.text)
+        if let itemToSearch = textField.text, !itemToSearch.isEmpty {
+            getItems(with: itemToSearch)
+        } else {
+            showDialogError(withMessage: String(localized: "TEXT_FIELD_EMPTY_ERROR"))
+        }
         return true
     }
 }
@@ -92,7 +95,7 @@ extension DashboardVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ItemDetailVC()
+        let vc = ItemDetailVC.instantiate() as ItemDetailVC
         vc.initView(items[indexPath.row])
         pushViewController(with: vc)
     }

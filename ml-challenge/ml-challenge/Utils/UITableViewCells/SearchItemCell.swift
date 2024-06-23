@@ -32,7 +32,7 @@ class SearchItemCell: UITableViewCell {
         downloadThumbnail(data.thumbnail)
         loadingThumbnailIndicator.startAnimating()
         titleLabel.text = data.title
-        detailLabel.text = "R$ \(data.price)"
+        detailLabel.text = "\(AppConstants.siteId.pricePrefix) \(data.price.formattedString())"
     }
 }
 

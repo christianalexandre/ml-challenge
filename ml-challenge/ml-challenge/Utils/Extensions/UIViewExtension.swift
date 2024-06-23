@@ -22,13 +22,50 @@ protocol LayoutGuideProvider {
 }
 
 extension UIView {
-    func fillSuperView() {
+    @IBInspectable var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+        }
+    }
+
+    @IBInspectable var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+
+    @IBInspectable var borderColor: UIColor? {
+        get {
+            if let color = layer.borderColor {
+                return UIColor(cgColor: color)
+            }
+
+            return nil
+        }
+        set {
+            if let color = newValue {
+                layer.borderColor = color.cgColor
+            } else {
+                layer.borderColor = nil
+            }
+        }
+    }
+    
+    func fillSuperView(padding: UIEdgeInsets = .zero) {
         guard let superview = self.superview else { return }
         translatesAutoresizingMaskIntoConstraints = false
-        topAnchor.constraint(equalTo: superview.topAnchor, constant: 0).isActive = true
-        leftAnchor.constraint(equalTo: superview.leftAnchor, constant: 0).isActive = true
-        bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: 0).isActive = true
-        rightAnchor.constraint(equalTo: superview.rightAnchor, constant: 0).isActive = true
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: padding.top),
+            leadingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: padding.left),
+            bottomAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom),
+            trailingAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -padding.right)
+        ])
     }
     
     func centerToSuperView() {
@@ -113,6 +150,47 @@ extension UIView {
 
         if let height = height {
             self.heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+    }
+}
+
+extension UIView {
+    func showToast(message: String, duration: Double = 2.0) {
+        let toastLabel = UILabel()
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 16.0, weight: .semibold)
+        toastLabel.text = message
+        toastLabel.alpha = 0.0
+        toastLabel.numberOfLines = 0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        
+        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(toastLabel)
+        
+        NSLayoutConstraint.activate([
+            toastLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 40),
+            toastLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -40),
+            toastLabel.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            toastLabel.heightAnchor.constraint(equalToConstant: 36)
+
+        ])
+        
+        toastLabel.layer.shadowColor = UIColor.black.cgColor
+        toastLabel.layer.shadowOpacity = 0.3
+        toastLabel.layer.shadowOffset = CGSize(width: 0, height: 2)
+        toastLabel.layer.shadowRadius = 4
+        
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
+            toastLabel.alpha = 1.0
+        }) { _ in
+            UIView.animate(withDuration: 0.5, delay: duration, options: .curveEaseOut, animations: {
+                toastLabel.alpha = 0.0
+            }) { _ in
+                toastLabel.removeFromSuperview()
+            }
         }
     }
 }
