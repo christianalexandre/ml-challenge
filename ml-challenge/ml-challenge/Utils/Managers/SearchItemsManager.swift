@@ -12,10 +12,10 @@ import RxAlamofire
 /// A singleton class responsible for managing search items.
 class SearchItemsManager {
     private init() {}
-    static let shared = SearchItemsManager()
+    static var shared = SearchItemsManager()
     
     private let disposeBag = DisposeBag()
-    private let searchRepository = SearchItemRepository()
+    private var searchRepository = SearchItemRepository()
     private var lastSearchByName = ""
 }
 
@@ -82,5 +82,12 @@ extension SearchItemsManager {
             
             return Disposables.create()
         }
+    }
+}
+
+extension SearchItemsManager {
+    /// Only used by tests
+    func replaceRepository(with repository: SearchItemRepository) {
+        self.searchRepository = repository
     }
 }
