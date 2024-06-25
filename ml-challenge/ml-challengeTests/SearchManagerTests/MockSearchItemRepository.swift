@@ -18,6 +18,7 @@ class MockSearchItemRepository: SearchItemRepository {
     
     var searchItemResponse: Single<SearchItemResponse>?
     var searchBySellerResponse: Single<SearchItemResponse>?
+    var searchByCategoryResponse: Single<SearchItemResponse>?
     
     override func searchItem(_ item: String, _ offset: Int) -> Single<SearchItemResponse> {
         return searchItemResponse ?? Single.error(TestError.mockNotImplemented)
@@ -25,6 +26,10 @@ class MockSearchItemRepository: SearchItemRepository {
     
     override func searchBySellerId(_ sellerId: String, _ category: String) -> Single<SearchItemResponse> {
         return searchBySellerResponse ?? Single.error(TestError.mockNotImplemented)
+    }
+    
+    override func searchByCategory(_ category: String, _ offset: Int) -> Single<SearchItemResponse> {
+        return searchByCategoryResponse ?? Single.error(TestError.mockNotImplemented)
     }
 }
 
@@ -775,6 +780,304 @@ extension MockSearchItemRepository {
             "total": 40,
             "primary_results": 40,
             "offset": 0,
+            "limit": 50
+        },
+        "results": []
+    }
+    """
+    
+    static let searchByCategorySuccessJSON = """
+    {
+        "site_id": "MLB",
+        "country_default_time_zone": "GMT-03:00",
+        "paging": {
+            "total": 47239,
+            "primary_results": 1000,
+            "offset": 400,
+            "limit": 50
+        },
+        "results": [
+            {
+                "id": "MLB3684698569",
+                "title": "Notebook Asus Vivobook Go 15 E1504ga Intel Core I3 N305 8gb Ram 256gb Ssd Windows 11 Home Tela 15,6  Fhd Silver - Nj434w",
+                "condition": "new",
+                "thumbnail_id": "982406-MLU74678297529_022024",
+                "catalog_product_id": "MLB34017480",
+                "listing_type_id": "gold_special",
+                "permalink": "https://www.mercadolivre.com.br/notebook-asus-vivobook-go-15-e1504ga-intel-core-i3-n305-8gb-ram-256gb-ssd-windows-11-home-tela-156-fhd-silver-nj434w/p/MLB34017480",
+                "buying_mode": "buy_it_now",
+                "site_id": "MLB",
+                "category_id": "MLB1652",
+                "domain_id": "MLB-NOTEBOOKS",
+                "thumbnail": "http://http2.mlstatic.com/D_982406-MLU74678297529_022024-I.jpg",
+                "currency_id": "BRL",
+                "order_backend": 1,
+                "price": 2575.08,
+                "original_price": 2575.08,
+                "sale_price": null,
+                "available_quantity": 1,
+                "official_store_id": 2053,
+                "official_store_name": "Asus",
+                "use_thumbnail_id": true,
+                "accepts_mercadopago": true,
+                "shipping": {
+                    "store_pick_up": false,
+                    "free_shipping": true,
+                    "logistic_type": "cross_docking",
+                    "mode": "me2",
+                    "tags": [
+                        "mandatory_free_shipping"
+                    ],
+                    "benefits": null,
+                    "promise": null,
+                    "shipping_score": -1
+                },
+                "stop_time": "2044-05-04T04:00:00.000Z",
+                "seller": {
+                    "id": 353148713,
+                    "nickname": "ACBZIMPORTACAOECOMERCIOLTD"
+                },
+                "attributes": [
+                    {
+                        "id": "ALPHANUMERIC_MODEL",
+                        "name": "Modelo alfanumérico",
+                        "value_id": "20502460",
+                        "value_name": "E1504GA",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "20502460",
+                                "name": "E1504GA",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "BRAND",
+                        "name": "Marca",
+                        "value_id": "7294334",
+                        "value_name": "Asus",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "7294334",
+                                "name": "Asus",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "COLOR",
+                        "name": "Cor",
+                        "value_id": "124682",
+                        "value_name": "Prata metálico",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "124682",
+                                "name": "Prata metálico",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "GTIN",
+                        "name": "Código universal de produto",
+                        "value_id": null,
+                        "value_name": "7898573299784",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": null,
+                                "name": "7898573299784",
+                                "struct": null,
+                                "source": 252977589148881
+                            }
+                        ],
+                        "source": 252977589148881,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "ITEM_CONDITION",
+                        "name": "Condição do item",
+                        "value_id": "2230284",
+                        "value_name": "Novo",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "2230284",
+                                "name": "Novo",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "list"
+                    },
+                    {
+                        "id": "LINE",
+                        "name": "Linha",
+                        "value_id": "13488192",
+                        "value_name": "VivoBook Go 15",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "13488192",
+                                "name": "VivoBook Go 15",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "MODEL",
+                        "name": "Modelo",
+                        "value_id": "34245099",
+                        "value_name": "E1504GA-NJ434W",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "34245099",
+                                "name": "E1504GA-NJ434W",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "PROCESSOR_BRAND",
+                        "name": "Marca do processador",
+                        "value_id": "7855833",
+                        "value_name": "Intel",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "7855833",
+                                "name": "Intel",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "list"
+                    },
+                    {
+                        "id": "PROCESSOR_LINE",
+                        "name": "Linha do processador",
+                        "value_id": "12840706",
+                        "value_name": "Intel Core i3",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "12840706",
+                                "name": "Intel Core i3",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "PROCESSOR_MODEL",
+                        "name": "Modelo do processador",
+                        "value_id": "16588989",
+                        "value_name": "N305",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": null,
+                        "values": [
+                            {
+                                "id": "16588989",
+                                "name": "N305",
+                                "struct": null,
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "string"
+                    },
+                    {
+                        "id": "WEIGHT",
+                        "name": "Peso",
+                        "value_id": "7518316",
+                        "value_name": "1.63 kg",
+                        "attribute_group_id": "OTHERS",
+                        "attribute_group_name": "Outros",
+                        "value_struct": {
+                            "number": 1.63,
+                            "unit": "kg"
+                        },
+                        "values": [
+                            {
+                                "id": "7518316",
+                                "name": "1.63 kg",
+                                "struct": {
+                                    "number": 1.63,
+                                    "unit": "kg"
+                                },
+                                "source": 1
+                            }
+                        ],
+                        "source": 1,
+                        "value_type": "number_unit"
+                    }
+                ],
+                "installments": {
+                    "quantity": 12,
+                    "amount": 249.65,
+                    "rate": 16.34,
+                    "currency_id": "BRL"
+                },
+                "winner_item_id": null,
+                "catalog_listing": true,
+                "discounts": null,
+                "promotions": [],
+                "inventory_id": null
+            }
+        ]
+    }
+    """
+    
+    static let searchByCategoryEmptyJSON = """
+    {
+        "site_id": "MLB",
+        "country_default_time_zone": "GMT-03:00",
+        "paging": {
+            "total": 47239,
+            "primary_results": 1000,
+            "offset": 400,
             "limit": 50
         },
         "results": []

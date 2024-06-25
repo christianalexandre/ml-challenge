@@ -149,4 +149,65 @@ final class SearchItemsManagerTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
     }
+    
+    func testSearchByCategory_Success() throws {
+        let data = Data(MockSearchItemRepository.searchByCategorySuccessJSON.utf8)
+        let searchItemResponse = try JSONDecoder().decode(SearchItemResponse.self, from: data)
+        mockRepository.searchByCategoryResponse = Single.just(searchItemResponse)
+
+        let expectation = self.expectation(description: "searchByCategory success")
+        
+        manager.searchByCategory("MLB1652", 400)
+            .subscribe(onSuccess: { items in
+                XCTAssertEqual(items.count, 1)
+                XCTAssertEqual(items.first?.title, "Notebook Asus Vivobook Go 15 E1504ga Intel Core I3 N305 8gb Ram 256gb Ssd Windows 11 Home Tela 15,6  Fhd Silver - Nj434w")
+                XCTAssertEqual(items.first?.siteId, "MLB")
+                expectation.fulfill()
+            }, onError: { error in
+                XCTFail("Unexpected error: \(error)")
+            })
+            .disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testSearchByCategory_EmptyResponse() throws {
+        let data = Data(MockSearchItemRepository.searchByCategoryEmptyJSON.utf8)
+        let searchItemResponse = try JSONDecoder().decode(SearchItemResponse.self, from: data)
+        mockRepository.searchByCategoryResponse = Single.just(searchItemResponse)
+        
+        let expectation = self.expectation(description: "searchByCategory empty response")
+        
+        manager.searchByCategory("MLB1652", 400)
+            .subscribe(onSuccess: { _ in
+                XCTFail("Expected error but got success")
+                expectation.fulfill()
+            }, onError: { error in
+                if let searchError = error as? SearchError, searchError == .noResults {
+                    expectation.fulfill()
+                } else {
+                    XCTFail("Different error received: \(error)")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testSearchByCategory_Error() throws {
+        mockRepository.searchByCategoryResponse = Single.error(TestError.mockError)
+        
+        let expectation = self.expectation(description: "searchByCategory error")
+        
+        manager.searchByCategory("MLB1652", 400)
+            .subscribe(onSuccess: { _ in
+                XCTFail("Expected error but got success")
+            }, onError: { error in
+                XCTAssertEqual(error.localizedDescription, TestError.mockError.localizedDescription)
+                expectation.fulfill()
+            })
+            .disposed(by: disposeBag)
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }
