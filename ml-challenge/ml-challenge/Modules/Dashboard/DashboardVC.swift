@@ -37,6 +37,7 @@ private extension DashboardVC {
     func setupView() {
         setupTextField()
         setupTableView()
+        setupAccessibilityId()
     }
     
     func setupTextField() {
@@ -48,6 +49,11 @@ private extension DashboardVC {
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         itemsTableView.registerCell(type: SearchItemCell.self)
+    }
+    
+    func setupAccessibilityId() {
+        searchItemTextField.accessibilityIdentifier = "searchItemTextField"
+        itemsTableView.accessibilityIdentifier = "itemsTableView"
     }
 }
 
