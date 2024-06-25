@@ -41,7 +41,7 @@ private extension SellerItemsVC {
         tableView.delegate = self
         tableView.dataSource = self
         
-        tableView.registerCell(type: SearchItemCell.self)
+        tableView.registerCell(type: SearchItemTableViewCell.self)
     }
 }
 
@@ -76,7 +76,7 @@ extension SellerItemsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueCell(withType: SearchItemCell.self,for: indexPath) as? SearchItemCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueCell(withType: SearchItemTableViewCell.self,for: indexPath) as? SearchItemTableViewCell else { return UITableViewCell() }
         cell.bind(with: items[indexPath.row])
         cell.selectionStyle = .none
         return cell

@@ -57,6 +57,18 @@ extension UIView {
         }
     }
     
+    func applyBorder() {
+        layer.cornerRadius = 10
+        layer.masksToBounds = true
+        layer.borderWidth = 1.0
+        layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 2)
+        layer.shadowOpacity = 0.2
+        layer.shadowRadius = 2
+        layer.masksToBounds = false
+    }
+    
     func fillSuperView(padding: UIEdgeInsets = .zero) {
         guard let superview = self.superview else { return }
         translatesAutoresizingMaskIntoConstraints = false

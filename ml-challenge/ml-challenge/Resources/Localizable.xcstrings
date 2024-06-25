@@ -7,6 +7,9 @@
     "BUY_NOW" : {
 
     },
+    "CART_TITLE" : {
+
+    },
     "DIALOG_ERROR" : {
 
     },
@@ -19,6 +22,9 @@
     "IMAGE_DOWNLOAD_ERROR" : {
 
     },
+    "LAST_SEARCH_TITLE" : {
+
+    },
     "LOADING_DEFAULT" : {
 
     },
@@ -28,6 +34,9 @@
     "NOT_IMPLEMENTED_YET" : {
 
     },
+    "NOT_SEARCHED_YET" : {
+
+    },
     "OFFSET_GREATER_THAN_1000_LIMIT" : {
 
     },
@@ -35,6 +44,9 @@
 
     },
     "RELOADING" : {
+
+    },
+    "SEARCH_ITEM_TITLE" : {
 
     },
     "SEARCH_NO_RESULTS" : {

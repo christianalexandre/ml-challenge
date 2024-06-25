@@ -1,43 +1,42 @@
 //
-//  SearchItemCell.swift
+//  SearchItemCollectionViewCell.swift
 //  ml-challenge
 //
-//  Created by Christian Alberton Alexandre on 21/06/24.
+//  Created by Christian Alberton Alexandre on 25/06/24.
 //
 
-import Foundation
 import UIKit
 import RxSwift
-import RxAlamofire
 
-class SearchItemCell: UITableViewCell {
+class SearchItemCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var thumbnailImageView: UIImageView!
-    @IBOutlet weak var loadingThumbnailIndicator: UIActivityIndicatorView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var badgesView: UIView!
-    @IBOutlet weak var detailLabel: UILabel!
+    @IBOutlet weak var loadingThumbnailIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var priceLabel: UILabel!
     
     private let disposeBag = DisposeBag()
-    
-    override class func awakeFromNib() {
+
+    override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         changeThumbnailVisibility(isHidden: true)
     }
     
     func bind(with data: SearchItem) {
+        self.applyBorder()
         changeThumbnailVisibility(isHidden: true)
         downloadThumbnail(data.thumbnail)
         loadingThumbnailIndicator.startAnimating()
         titleLabel.text = data.title
-        detailLabel.text = "\(AppConstants.siteId.pricePrefix) \(data.price.formattedString())"
+        priceLabel.text = "\(AppConstants.siteId.pricePrefix) \(data.price.formattedString())"
     }
 }
 
 // - MARK: Private Methods
-private extension SearchItemCell {
+private extension SearchItemCollectionViewCell {
     func downloadThumbnail(_ url: String) {
         SearchItemsManager.shared.downloadThumnail(from: url)
             .subscribe(onSuccess: { [weak self] data in
@@ -54,5 +53,4 @@ private extension SearchItemCell {
         !isHidden ? loadingThumbnailIndicator.startAnimating() : loadingThumbnailIndicator.stopAnimating()
     }
 }
-
 

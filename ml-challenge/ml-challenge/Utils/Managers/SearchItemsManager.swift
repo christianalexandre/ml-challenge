@@ -62,6 +62,25 @@ extension SearchItemsManager {
             }
     }
     
+    /// Fetch items by category
+    /// - Parameters:
+    ///   - category: The category to filter
+    /// - Returns: A Single emitting an array of "Search Item" or error
+    func searchByCategory(_ category: String, _ offset: Int) -> Single<[SearchItem]> {
+        return searchRepository.searchByCategory(category, offset)
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .observeOn(ConcurrentMainScheduler.instance)
+            .flatMap { searchItemResponse -> Single<[SearchItem]> in
+                if offset > 1000 {
+                    return Single.error(SearchError.offsetError)
+                }
+                if searchItemResponse.results.isEmpty {
+                    return Single.error(SearchError.noResults)
+                }
+                return Single.just(searchItemResponse.results)
+            }
+    }
+    
     /// Download the data image from url
     /// - Parameter urlString: The url string of the image
     /// - Returns: A Single emitting the image data

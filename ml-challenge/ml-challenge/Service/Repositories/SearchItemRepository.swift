@@ -37,4 +37,17 @@ class SearchItemRepository {
             url: endpoint
         )
     }
+    
+    /// Searches for items by a specific category.
+    ///
+    /// - Parameters:
+    ///   - category: The category of items to search within.
+    /// - Returns: A Single emitting the search results.
+    func searchByCategory(_ category: String, _ offset: Int) -> Single<SearchItemResponse> {
+        let endpoint = Endpoints.searchByCategory(category, offset)
+        return BaseRepository.shared.createSingleRequest(
+            method: .get,
+            url: endpoint
+        )
+    }
 }

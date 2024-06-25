@@ -15,4 +15,8 @@ struct Endpoints {
     static func searchBySeller(_ sellerId: String, _ categoryId: String) -> String {
         return "\(ApiConstants.apiURL)/sites/\(AppConstants.siteId.rawValue)/search?seller_id=\(sellerId)&category=\(categoryId)"
     }
+    
+    static func searchByCategory(_ categoryId: String, _ offset: Int) -> String {
+        return "\(ApiConstants.apiURL)/sites/\(AppConstants.siteId.rawValue)/search?category=\(categoryId)&offset=\(offset)"
+    }
 }
