@@ -66,7 +66,6 @@ extension UIView {
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 2
-        layer.masksToBounds = false
     }
     
     func fillSuperView(padding: UIEdgeInsets = .zero) {

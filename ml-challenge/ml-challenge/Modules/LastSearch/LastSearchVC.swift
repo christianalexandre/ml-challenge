@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 
 class LastSearchVC: BaseVC {
+    var cartDelegate: CartDelegate?
     private let disposeBag = DisposeBag()
     private var items: [SearchItem] = []
     private var categoryDisplaying: String?
@@ -19,6 +20,13 @@ class LastSearchVC: BaseVC {
         label.text = String(localized: "LAST_SEARCH_TITLE")
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 17, weight: .bold)
+        return label
+    }()
+    
+    private let notSearchedLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(localized: "NOT_SEARCHED_YET")
+        label.textAlignment = .center
         return label
     }()
     
@@ -81,14 +89,12 @@ private extension LastSearchVC {
         if let lastSearch = UserDefaultsHelper.shared.getString(forKey: .lastSearchCategory) {
             if lastSearch != categoryDisplaying {
                 getItems(with: lastSearch)
+                notSearchedLabel.removeFromSuperview()
             }
         } else {
-            let uiLabel = UILabel()
-            uiLabel.text = String(localized: "NOT_SEARCHED_YET")
-            uiLabel.textAlignment = .center
-            view.addSubview(uiLabel)
-            uiLabel.centerToSuperView()
-            uiLabel.anchorToEntireView(of: view, padding: 16)
+            view.addSubview(notSearchedLabel)
+            notSearchedLabel.centerToSuperView()
+            notSearchedLabel.anchorToEntireView(of: view, padding: 16)
         }
     }
 }
@@ -129,14 +135,16 @@ extension LastSearchVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = ItemDetailVC.instantiate() as ItemDetailVC
-        vc.initView(items[indexPath.row])
+        vc.initView(items[indexPath.row], cartDelegate)
         pushViewController(with: vc)
     }
 }
 
 extension LastSearchVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width / 2 - 16, height: 250)
+        let width = collectionView.frame.width / 2 - 16
+        let height = width + 120
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -145,12 +153,5 @@ extension LastSearchVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 16
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let lastIndex = indexPath.item + 1
-        if let categoryDisplaying, lastIndex == items.count {
-            getItems(with: categoryDisplaying)
-        }
     }
 }

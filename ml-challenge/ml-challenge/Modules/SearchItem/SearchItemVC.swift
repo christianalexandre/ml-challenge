@@ -10,11 +10,21 @@ import UIKit
 import RxSwift
 
 class SearchItemVC: BaseVC {
+    @IBOutlet weak var clearSearchButton: UIButton!
     @IBOutlet weak var searchItemTextField: UITextField!
+    @IBOutlet weak var noItemsView: UIView!
+    @IBOutlet weak var noItemsLabel: UILabel!
     @IBOutlet weak var itemsTableView: UITableView!
     
+    var cartDelegate: CartDelegate?
     private let disposeBag = DisposeBag()
-    private var items: [SearchItem] = []
+    private var items: [SearchItem] = [] {
+        didSet {
+            clearSearchButton.isHidden = items.isEmpty
+            noItemsView.isHidden = !items.isEmpty
+            itemsTableView.isHidden = items.isEmpty
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +37,7 @@ private extension SearchItemVC {
     func setupView() {
         setupTextField()
         setupTableView()
+        setupNoItemsLabel()
         setupAccessibilityId()
     }
     
@@ -39,6 +50,10 @@ private extension SearchItemVC {
         itemsTableView.delegate = self
         itemsTableView.dataSource = self
         itemsTableView.registerCell(type: SearchItemTableViewCell.self)
+    }
+    
+    func setupNoItemsLabel() {
+        noItemsLabel.text = String(localized: "SEARCH_ITEM_DO_YOUR_SEARCH")
     }
     
     func setupAccessibilityId() {
@@ -68,6 +83,15 @@ private extension SearchItemVC {
     }
 }
 
+// - MARK: Action Methods
+private extension SearchItemVC {
+    @IBAction func onClearSearchTapped(_ sender: Any) {
+        searchItemTextField.text?.removeAll()
+        items.removeAll()
+        itemsTableView.reloadData()
+    }
+}
+
 // - MARK: Delegate Methods
 extension SearchItemVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -94,7 +118,7 @@ extension SearchItemVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = ItemDetailVC.instantiate() as ItemDetailVC
-        vc.initView(items[indexPath.row])
+        vc.initView(items[indexPath.row], cartDelegate)
         pushViewController(with: vc)
     }
     

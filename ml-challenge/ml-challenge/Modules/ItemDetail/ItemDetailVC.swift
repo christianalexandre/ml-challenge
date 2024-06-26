@@ -17,6 +17,7 @@ class ItemDetailVC: BaseVC {
     @IBOutlet weak var originalPriceLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
     
+    var cartDelegate: CartDelegate?
     private let disposeBag = DisposeBag()
     private var item: SearchItem?
     
@@ -25,8 +26,9 @@ class ItemDetailVC: BaseVC {
         setupView()
     }
         
-    func initView(_ item: SearchItem) {
+    func initView(_ item: SearchItem, _ cartDelegate: CartDelegate?) {
         self.item = item
+        self.cartDelegate = cartDelegate
     }
 }
 
@@ -44,7 +46,7 @@ private extension ItemDetailVC {
             originalPriceLabel.attributedText = String("\(AppConstants.siteId.pricePrefix) \(originalPrice.formattedString() )").strikeThroughText()
         }
         
-        stackView.addArrangedSubview(createBuyView())
+        stackView.addArrangedSubview(createBuyView(for: item))
         stackView.addArrangedSubview(createSellerView(with: item.seller, category: item.categoryId))
         stackView.addArrangedSubview(createProductInfoView(item.attributes.toDictionary()))
     }
@@ -76,7 +78,7 @@ private extension ItemDetailVC {
 
 // - MARK: Create View Area
 private extension ItemDetailVC {
-    func createBuyView() -> UIView {
+    func createBuyView(for item: SearchItem ) -> UIView {
         let containerView = UIView()
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -87,7 +89,8 @@ private extension ItemDetailVC {
         stackView.fillSuperView()
         
         let addCartButton = createButtonContainer(withTitle: String(localized: "ADD_TO_CART")) {
-            self.view.showToast(message: String(localized: "NOT_IMPLEMENTED_YET"))
+            self.cartDelegate?.addItemToCart(item)
+            self.view.showToast(message: String(localized: "ADDED_TO_CART"))
         }
         
         let buyButton = createButtonContainer(withTitle: String(localized: "BUY_NOW")) {

@@ -4,6 +4,9 @@
     "ADD_TO_CART" : {
 
     },
+    "ADDED_TO_CART" : {
+
+    },
     "BUY_NOW" : {
 
     },
@@ -31,6 +34,9 @@
     "LOADING_SELLER_ITEMS" : {
 
     },
+    "NO_ITEMS_ON_CART" : {
+
+    },
     "NOT_IMPLEMENTED_YET" : {
 
     },
@@ -44,6 +50,12 @@
 
     },
     "RELOADING" : {
+
+    },
+    "REMOVE_FROM_CART" : {
+
+    },
+    "SEARCH_ITEM_DO_YOUR_SEARCH" : {
 
     },
     "SEARCH_ITEM_TITLE" : {
