@@ -15,6 +15,7 @@ class SearchItemTableViewCell: UITableViewCell {
     @IBOutlet weak var loadingThumbnailIndicator: UIActivityIndicatorView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var badgesView: UIView!
+    @IBOutlet weak var qtyLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     
     private let disposeBag = DisposeBag()
@@ -28,12 +29,17 @@ class SearchItemTableViewCell: UITableViewCell {
         changeThumbnailVisibility(isHidden: true)
     }
     
-    func bind(with data: SearchItem) {
+    func bind(with data: SearchItem, qty: Int? = nil) {
         changeThumbnailVisibility(isHidden: true)
         downloadThumbnail(data.thumbnail)
         loadingThumbnailIndicator.startAnimating()
         titleLabel.text = data.title
         detailLabel.text = "\(AppConstants.siteId.pricePrefix) \(data.price.formattedString())"
+        
+        if let qty = qty {
+            badgesView.isHidden = false
+            qtyLabel.text = "\(String(localized: "QUANTITY_LABEL")): \(qty)"
+        }
     }
 }
 

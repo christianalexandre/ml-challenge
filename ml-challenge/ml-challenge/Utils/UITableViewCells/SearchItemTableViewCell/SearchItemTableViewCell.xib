@@ -37,8 +37,22 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJw-M6-9VN">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oJw-M6-9VN">
                         <rect key="frame" x="144" y="63.999999999999993" width="233" height="27.666666666666664"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e93-0r-Evm">
+                                <rect key="frame" x="0.0" y="0.0" width="233" height="27.666666666666668"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="e93-0r-Evm" firstAttribute="leading" secondItem="oJw-M6-9VN" secondAttribute="leading" id="26m-iJ-kdu"/>
+                            <constraint firstAttribute="trailing" secondItem="e93-0r-Evm" secondAttribute="trailing" id="4kt-sS-cE9"/>
+                            <constraint firstAttribute="bottom" secondItem="e93-0r-Evm" secondAttribute="bottom" id="KzD-vq-9a8"/>
+                            <constraint firstItem="e93-0r-Evm" firstAttribute="top" secondItem="oJw-M6-9VN" secondAttribute="top" id="zp8-Of-04D"/>
+                        </constraints>
                     </view>
                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="bXy-K4-ri8">
                         <rect key="frame" x="62" y="54" width="20" height="20"/>
@@ -67,6 +81,7 @@
                 <outlet property="badgesView" destination="oJw-M6-9VN" id="QBE-TC-vXD"/>
                 <outlet property="detailLabel" destination="oyL-I6-1J5" id="j3O-iv-YHd"/>
                 <outlet property="loadingThumbnailIndicator" destination="bXy-K4-ri8" id="RdB-RI-1Uy"/>
+                <outlet property="qtyLabel" destination="e93-0r-Evm" id="obC-d4-cae"/>
                 <outlet property="thumbnailImageView" destination="PmG-C5-96z" id="5be-p0-Px6"/>
                 <outlet property="titleLabel" destination="l7p-N2-LVI" id="H08-42-E8h"/>
             </connections>

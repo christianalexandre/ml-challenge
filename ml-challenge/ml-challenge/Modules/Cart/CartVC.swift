@@ -9,10 +9,17 @@ import Foundation
 import UIKit
 
 class CartVC: BaseVC {
+    typealias CartItems = [(item: SearchItem?, qty: Int)]
+    
     var cartDelegate: CartDelegate?
     private var items: [SearchItem] = [] {
         didSet {
             cartDelegate?.updateCartBadge(String(items.count))
+        }
+    }
+    private var cartItems: CartItems {
+        Dictionary(grouping: items, by: { $0.id }).map { itemsDict in
+            (itemsDict.value.first, itemsDict.value.count)
         }
     }
     private var categoryDisplaying: String?
@@ -114,12 +121,15 @@ extension CartVC {
 // MARK: - Delegate Methods
 extension CartVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return cartItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueCell(withType: SearchItemTableViewCell.self,for: indexPath) as? SearchItemTableViewCell else { return UITableViewCell() }
-        cell.bind(with: items[indexPath.row])
+        let item = cartItems[indexPath.row]
+        if let unwrapItem = item.item {
+            cell.bind(with: unwrapItem, qty: item.qty)
+        }
         cell.selectionStyle = .none
         return cell
     }
