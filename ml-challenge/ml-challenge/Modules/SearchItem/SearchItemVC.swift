@@ -104,12 +104,12 @@ private extension SearchItemVC {
 // - MARK: Delegate Methods
 extension SearchItemVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchItemTextField.resignFirstResponder()
         if let itemToSearch = textField.text, !itemToSearch.isEmpty {
             getItems(with: itemToSearch)
         } else {
             showDialogError(withMessage: String(localized: "TEXT_FIELD_EMPTY_ERROR"))
         }
-        dismissKeyboard()
         return true
     }
 }
