@@ -43,7 +43,7 @@ private extension BottomMenuVC {
         cartVC.cartDelegate = self
         
         searchItemVC.tabBarItem = UITabBarItem(title: String(localized: "SEARCH_ITEM_TITLE"), image: UIImage(systemName: "magnifyingglass"), tag: 0)
-        lastSearchVC.tabBarItem = UITabBarItem(title: String(localized: "LAST_SEARCH_TITLE"), image: UIImage(systemName: "shared.with.you"), tag: 1)
+        lastSearchVC.tabBarItem = UITabBarItem(title: String(localized: "LAST_SEARCH_TITLE"), image: UIImage(systemName: "shareplay"), tag: 1)
         cartVC.tabBarItem = UITabBarItem(title: String(localized: "CART_TITLE"), image: UIImage(systemName: "cart"), tag: 2)
         
         self.viewControllers = [searchItemVC, lastSearchVC, cartVC]

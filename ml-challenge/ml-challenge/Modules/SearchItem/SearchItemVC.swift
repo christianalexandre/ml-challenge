@@ -44,6 +44,11 @@ private extension SearchItemVC {
     func setupTextField() {
         searchItemTextField.delegate = self
         searchItemTextField.placeholder = String(localized: "SEARCH_PRODUCTS")
+        searchItemTextField.returnKeyType = .search
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
     
     func setupTableView() {
@@ -90,6 +95,10 @@ private extension SearchItemVC {
         items.removeAll()
         itemsTableView.reloadData()
     }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 // - MARK: Delegate Methods
@@ -100,6 +109,7 @@ extension SearchItemVC: UITextFieldDelegate {
         } else {
             showDialogError(withMessage: String(localized: "TEXT_FIELD_EMPTY_ERROR"))
         }
+        dismissKeyboard()
         return true
     }
 }

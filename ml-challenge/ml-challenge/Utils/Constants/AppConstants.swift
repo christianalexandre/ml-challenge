@@ -9,7 +9,7 @@ import Foundation
 
 struct AppConstants {
     static var siteId: SiteId {
-        return Locale.current.language.languageCode?.identifier.contains("es") == true ? .mla : .mlb
+        return Locale.current.languageCode?.contains("es") == true ? .mla : .mlb
     }
     
     enum UserDefaultsKeys: String {
