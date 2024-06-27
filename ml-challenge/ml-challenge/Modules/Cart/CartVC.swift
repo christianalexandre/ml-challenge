@@ -14,7 +14,7 @@ class CartVC: BaseVC {
     var cartDelegate: CartDelegate?
     private var items: [SearchItem] = [] {
         didSet {
-            cartDelegate?.updateCartBadge(String(items.count))
+            updateLayout()
         }
     }
     private var cartItems: CartItems {
@@ -101,6 +101,7 @@ private extension CartVC {
     }
     
     func updateLayout() {
+        cartDelegate?.updateCartBadge(String(items.count))
         noItemsLabel.isHidden = !items.isEmpty
         tableView.isHidden = items.isEmpty
     }
@@ -143,8 +144,8 @@ extension CartVC: UITableViewDelegate, UITableViewDataSource {
             style: .destructive,
             title: String(localized: "REMOVE_FROM_CART")
         ) { (_, _, completionHandler) in
-            self.items.remove(at: indexPath.row)
-            self.updateLayout()
+            let idToRemove = self.cartItems[indexPath.row].item?.id
+            self.items.removeAll(where: { $0.id == idToRemove })
             tableView.deleteRows(at: [indexPath], with: .automatic)
             completionHandler(true)
         }
