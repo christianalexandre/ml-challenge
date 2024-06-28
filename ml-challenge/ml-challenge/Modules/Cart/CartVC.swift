@@ -18,9 +18,11 @@ class CartVC: BaseVC {
         }
     }
     private var cartItems: CartItems {
-        Dictionary(grouping: items, by: { $0.id }).map { itemsDict in
-            (itemsDict.value.first, itemsDict.value.count)
-        }
+        Dictionary(grouping: items, by: { $0.id })
+            .sorted(by: { $0.key < $1.key })
+            .map { itemsDict in
+                (itemsDict.value.first, itemsDict.value.count)
+            }
     }
     private var categoryDisplaying: String?
     
