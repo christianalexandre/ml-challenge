@@ -57,11 +57,6 @@ Abra o xcodeproj
 ```
 Aguarde as dependências (SPM) sincronizarem e rode o projeto.
 
-Você também pode baixar instalar o ipa diretamente no seu iOS escaneando o QR abaixo:
-<div style="display: flex; justify-content: center;">
-    <img src="./assets/diawi-qr.png" style="width: 25%; margin-right: 5px;">
-</div>
-
 ## Desenvolvido com
 
 - Xcode
